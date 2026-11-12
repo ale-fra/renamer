@@ -152,34 +152,37 @@ for (const file of files) {
 /* Collect any errors still pending from the last test */
 await nextTurn()
 
-if (failures.length) {
-  console.log(chalk.red.bold(`\nFailures (${failures.length}):`))
-  failures.forEach(({ file, name, err }, i) => {
-    console.log(`\n  ${i + 1}) ${file} > ${name}\n${formatError(err)}`)
-  })
-}
-if (strayErrors.length) {
-  console.log(chalk.red.bold(`\nErrors outside of any test (${strayErrors.length}):`))
-  strayErrors.forEach((err, i) => { console.log(`\n  ${i + 1})\n${formatError(err)}`) })
-}
+/* Wait for pending timers and I/O too: a late rejection must not turn into a false pass. */
+process.once('beforeExit', () => {
+  if (failures.length) {
+    console.log(chalk.red.bold(`\nFailures (${failures.length}):`))
+    failures.forEach(({ file, name, err }, i) => {
+      console.log(`\n  ${i + 1}) ${file} > ${name}\n${formatError(err)}`)
+    })
+  }
+  if (strayErrors.length) {
+    console.log(chalk.red.bold(`\nErrors outside of any test (${strayErrors.length}):`))
+    strayErrors.forEach((err, i) => { console.log(`\n  ${i + 1})\n${formatError(err)}`) })
+  }
 
-const failedTests = failures.filter(f => f.name !== '(failed to load)').length
-const failedFiles = failures.length - failedTests
-reportLines.push(
-  { label: 'Test files', value: failedFiles ? `${files.length} (${failedFiles} failed to load)` : files.length },
-  { label: 'Tests', value: toRun.length + skipped.length },
-  { label: 'Passed', value: passed, indent: true },
-  { label: 'Failed', value: failedTests, indent: true },
-  { label: 'Skipped', value: skipped.length, indent: true }
-)
-if (onlyTests.length) {
-  reportLines.push({ label: 'Not run', value: `${tests.length} (only the tests marked "only" were run)`, indent: true })
-}
-if (strayErrors.length) {
-  reportLines.push({ label: 'Errors', value: `${strayErrors.length} outside of any test` })
-}
-reportLines.push({ label: 'Duration', value: formatDuration(performance.now() - started) })
+  const failedTests = failures.filter(f => f.name !== '(failed to load)').length
+  const failedFiles = failures.length - failedTests
+  reportLines.push(
+    { label: 'Test files', value: failedFiles ? `${files.length} (${failedFiles} failed to load)` : files.length },
+    { label: 'Tests', value: toRun.length + skipped.length },
+    { label: 'Passed', value: passed, indent: true },
+    { label: 'Failed', value: failedTests, indent: true },
+    { label: 'Skipped', value: skipped.length, indent: true }
+  )
+  if (onlyTests.length) {
+    reportLines.push({ label: 'Not run', value: `${tests.length} (only the tests marked "only" were run)`, indent: true })
+  }
+  if (strayErrors.length) {
+    reportLines.push({ label: 'Errors', value: `${strayErrors.length} outside of any test` })
+  }
+  reportLines.push({ label: 'Duration', value: formatDuration(performance.now() - started) })
 
-const ok = failures.length === 0 && strayErrors.length === 0
-console.log(formatReport('TEST REPORT', reportLines, ok))
-process.exitCode = ok ? 0 : 1
+  const ok = failures.length === 0 && strayErrors.length === 0
+  console.log(formatReport('TEST REPORT', reportLines, ok))
+  process.exitCode = ok ? 0 : 1
+})

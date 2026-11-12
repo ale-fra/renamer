@@ -13,7 +13,7 @@ import path from 'node:path'
 const { test, only, skip } = createSuite()
 
 const docs = ['README.md', 'TODO.md', 'docs/API.md', 'docs/release-notes-v6.md', 'example/README.md']
-const read = (file: string): string => fs.readFileSync(file, 'utf8')
+const read = (file: string): string => fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n')
 
 /* Remove fenced code blocks, so their contents are not mistaken for prose. */
 function prose (markdown: string): string {

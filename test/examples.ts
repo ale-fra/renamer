@@ -84,7 +84,7 @@ test.set('api examples run, JS and TS versions match', function () {
     const run = (file: string): string => {
       const copy = path.join(outDir, path.basename(file))
       fs.writeFileSync(copy, fs.readFileSync(file, 'utf8').replace(/from 'renamer'/g, `from '${indexUrl}'`))
-      const result = spawnSync(process.execPath, [copy], { encoding: 'utf8' })
+      const result = spawnSync(process.execPath, [copy], { encoding: 'utf8', env: { ...process.env, FORCE_COLOR: '0' } })
       a.equal(result.status, 0, `${file}: ${result.stderr}`)
       return result.stdout
     }

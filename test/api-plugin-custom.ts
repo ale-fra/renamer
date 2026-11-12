@@ -13,7 +13,7 @@ let index = 0
 
 test.set('simple', async function () {
   index++
-  const testFolder = path.join(testRoot, String(index))
+  const testFolder = path.posix.join(testRoot, String(index))
   createFixture(`${testFolder}/one`)
   createFixture(`${testFolder}/two`)
   let assertionCount = 0
@@ -48,7 +48,7 @@ test.set('simple', async function () {
 
 test.set('chain of two plugins', async function () {
   index++
-  const testFolder = path.join(testRoot, String(index))
+  const testFolder = path.posix.join(testRoot, String(index))
   createFixture(`${testFolder}/one`)
   let assertionCount = 0
   class TestPlugin implements Plugin {
@@ -79,7 +79,7 @@ test.set('chain of two plugins', async function () {
 
 test.set('plugin receives options, index and the full file list', async function () {
   index++
-  const testFolder = path.join(testRoot, String(index))
+  const testFolder = path.posix.join(testRoot, String(index))
   const one = createFixture(`${testFolder}/one`)
   const two = createFixture(`${testFolder}/two`)
   const calls: unknown[] = []

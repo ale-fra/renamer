@@ -45,7 +45,7 @@ Renamer is now written in TypeScript and ships type definitions. The command lin
 ## For contributors
 
 * Sources are TypeScript, run directly by Node.js during development: `npm ci`, then `npm test` (type-check plus tests) and `npm run build` (compile to `dist/`).
-* Development dependencies are pinned and in the lockfile. The tests are run by `scripts/test.ts`, a minimal runner with no dependencies, which also works in the Windows command prompt. Each run ends with a report of the tests run, passed, failed and skipped; a test which leaves an unhandled promise rejection fails.
+* Development dependencies are pinned and in the lockfile. The tests are run by `scripts/test.ts`, a minimal runner with no dependencies, which also works in the Windows command prompt. Each run ends with a report of the tests run, passed, failed and skipped; unhandled promise rejections fail the run, including rejections from pending timers after the last test.
 * The test suite checks the documentation against the code: exports, signatures, member tables, code examples, links and command-line options.
 * `npm run test:e2e` runs the built command end to end in a temporary directory, ends with a report, and keeps the directory for inspection.
 
