@@ -1,0 +1,33 @@
+{
+  // Type-check config for the whole project (sources + tests). Emits nothing.
+  // Sources are executed directly by Node's native type stripping, so the syntax
+  // must stay erasable and type-only imports must be explicit.
+  "compilerOptions": {
+    "target": "es2023",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "types": ["node"],
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+
+    /* Node-native TypeScript compatibility */
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+
+    /* Type-check imports of the package by name (examples, docs) against the
+       sources, so that no build is needed. Not used by the build: the sources
+       never import the package by name. */
+    "paths": { "renamer": ["./index.ts"] },
+
+    "noEmit": true
+  },
+  "include": ["index.ts", "bin/**/*.ts", "lib/**/*.ts", "test/**/*.ts", "scripts/**/*.ts", "example/**/*.ts", "types/**/*.d.ts"]
+}

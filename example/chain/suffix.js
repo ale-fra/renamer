@@ -35,7 +35,9 @@ class Suffix {
    */
   replace (filePath, options) {
     const file = path.parse(filePath)
-    const newName = file.name + options.suffix + file.ext
+    /* `defaultValue` only applies on the command line: via the API, unset options are undefined */
+    const suffix = options.suffix ?? ''
+    const newName = file.name + suffix + file.ext
     return path.join(file.dir, newName)
   }
 }

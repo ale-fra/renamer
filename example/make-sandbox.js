@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 import path from 'node:path'
 import fs from 'node:fs'
-import { createFixture } from '../test/lib/util.js'
 
 /* Run this script in the `example` folder, creating `example/sandbox` */
+
+function createFixture (filePath) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true })
+  fs.writeFileSync(filePath, 'test')
+}
 
 fs.rmSync('sandbox', { recursive: true, force: true })
 
@@ -24,8 +28,8 @@ const someFiles = [
   'sandbox/[eg]_Annoying_filename_-_13_[38881CD2].mp4',
   'sandbox/[fg]_Annoying_filename_-_23_[38881CD3].mp4',
   'sandbox/loads.of.full.stops.every.where.mp4',
-  'sandbox/youtube-dl-h5yIJXdItgo.mp4',
-  "sandbox/blah don't blah -Mr Blah-tkxWmh-tFGs.avi",
+  'sandbox/video-sample-00001.mp4',
+  "sandbox/sample clip - part 1.avi",
   'sandbox/zolder/[#f1ipping4nn0y1ing].file.NAME--23[$1$$!].mkv',
   'sandbox/zolder/[#f1ipping4nn0y1ing].file.NAME--3[$2$$!].mkv',
   'sandbox/zolder/[#f1ipping4nn0y1ing].file.NAME--13[$3$$!].mkv',
@@ -33,8 +37,8 @@ const someFiles = [
   'sandbox/zolder/[eg]_Annoying_filename_-_13_[38881CD2].mp4',
   'sandbox/zolder/[fg]_Annoying_filename_-_23_[38881CD3].mp4',
   'sandbox/zolder/loads.of.full.stops.every.where.mp4',
-  'sandbox/zolder/youtube-dl-h5yIJXdItgo.mp4',
-  "sandbox/zolder/blah don't blah - Mr Blah-tkxWmh-tFGs.avi",
+  'sandbox/zolder/video-sample-00001.mp4',
+  "sandbox/zolder/sample clip - part 2.avi",
   'sandbox/second-folder/one.txt',
   'sandbox/second-folder/two.txt',
   'sandbox/second-folder/three.txt',
@@ -52,11 +56,11 @@ const someFiles = [
   'sandbox/spaces/file b here .txt',
   'sandbox/spaces/a  spacey - file .txt',
   'sandbox/data1.csv',
-  'sandbox/data2 (checked by Lloyd).csv',
+  'sandbox/data2 (checked by reviewer).csv',
   'sandbox/data3.xls',
   'sandbox/dates/20180716_180000.jpg',
   'sandbox/dates/20180717_210000.jpg',
-  'sandbox/alphanumeric/10002ASmith.pdf',
-  'sandbox/alphanumeric/10230CJones.pdf'
+  'sandbox/alphanumeric/10002-A.pdf',
+  'sandbox/alphanumeric/10230-C.pdf'
 ]
 someFiles.forEach(createFixture)
