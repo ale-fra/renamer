@@ -5,7 +5,7 @@ Release checklist carried forward from the sandbox, with integration work record
 ## Before publishing
 
 - [x] **Update the existing CI workflow for v6.** The fork's `.github/workflows/node.js.yml` now tests Node.js `22.18.0`, `22.x` and `24.x` on Linux, macOS and Windows with `npm ci`, the strict type check and tests, the built CLI end-to-end test, and an isolated tarball installation checking the CLI, API and public types. The README CI badge points to this fork.
-- [ ] **Confirm the full CI matrix passes**, including Windows-specific path and terminal behaviour. The integration updates the previously Linux-only assertions and avoids case-colliding fixtures on case-insensitive file systems.
+- [x] **Confirm the full CI matrix passes**, including Windows-specific path and terminal behaviour. All nine jobs passed in the [integration CI run](https://github.com/ale-fra/renamer/actions/runs/43211536794): 169 tests passed on Linux/macOS and 171 on Windows, with one pre-existing symlink test skipped, plus all 15 end-to-end checks and the isolated package checks. The integration fixes path, CRLF and colour assumptions, avoids case-colliding fixtures, and verifies the runner detects delayed asynchronous failures.
 - [ ] **Tag and publish.** Create the `v6.0.0` git tag, run `npm publish` (which builds `dist/` via `prepack`), and create the GitHub release using [docs/release-notes-v6.md](docs/release-notes-v6.md).
 
 ## After publishing
