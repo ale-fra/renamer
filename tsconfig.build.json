@@ -1,0 +1,15 @@
+{
+  // Publish build: emits JavaScript + declarations to dist/. Node refuses to strip
+  // types from files under node_modules, so the published package must be JS.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    /* Drops @internal declarations, see lib/cli-options.ts */
+    "stripInternal": true,
+    "noEmitOnError": true,
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "include": ["index.ts", "bin/**/*.ts", "lib/**/*.ts", "types/**/*.d.ts"]
+}

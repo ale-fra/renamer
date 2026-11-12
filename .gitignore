@@ -1,1 +1,7 @@
 example/sandbox
+node_modules/
+.cache/
+/dist/
+/build/
+/coverage/
+/tmp/
